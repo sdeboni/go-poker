@@ -1,10 +1,10 @@
 package poker
 
 import (
-  "cmp"
-  "strings"
-  "fmt"
-  "slices"
+	"cmp"
+	"fmt"
+	"slices"
+	"strings"
 )
 
 type CardRank int
@@ -49,9 +49,9 @@ const (
 )
 
 type Hand interface {
-  Compare(Hand) int
-  Cards() []Card
-  Rank() HandRank
+	Compare(Hand) int
+	Cards() []Card
+	Rank() HandRank
 	String() string
 }
 
@@ -70,26 +70,26 @@ func BestHand(str []string) ([]string, error) {
 		return nil, err
 	}
 
-  cardCounts := getCountsByCard(hands)
-  for card, count := range cardCounts {
-    if count > 1 {
-      return nil, fmt.Errorf("card %s used %d times", card.String(), count)
-    }
-  } 
+	cardCounts := getCountsByCard(hands)
+	for card, count := range cardCounts {
+		if count > 1 {
+			return nil, fmt.Errorf("card %s used %d times", card.String(), count)
+		}
+	}
 
 	slices.SortStableFunc(hands, func(a, b Hand) int {
-    return -a.Compare(b)
+		return -a.Compare(b)
 	})
 
-  result := []string{hands[0].String()}
+	result := []string{hands[0].String()}
 
-  for _, hand := range hands[1:] {
-    if hand.Compare(hands[0]) == 0 {
-      result = append(result, hand.String())
-    } else {
-      break
-    }
-  } 
+	for _, hand := range hands[1:] {
+		if hand.Compare(hands[0]) == 0 {
+			result = append(result, hand.String())
+		} else {
+			break
+		}
+	}
 
 	return result, nil
 }
@@ -110,33 +110,33 @@ func parseHands(arr []string) ([]Hand, error) {
 func parseHand(str string) (Hand, error) {
 	str = strings.TrimSpace(str)
 
-  cards, err := parseCards(str)
-  if err != nil {
-    return nil, err
-  }
+	cards, err := parseCards(str)
+	if err != nil {
+		return nil, err
+	}
 
 	if len(cards) != 5 {
 		return nil, fmt.Errorf("invalid hand '%s': expected 5 cards, found: %d", str, len(cards))
 	}
 
-  unsortedNormalFormHand := normalFormHand(cards)
+	unsortedNormalFormHand := normalFormHand(cards)
 
-  slices.SortFunc(cards, func(a, b Card) int {
-    return cmp.Compare(a.rank, b.rank)
-  })        
-  if hand := newStraight(unsortedNormalFormHand, cards); hand != nil {
-    return hand, nil
-  }
-  if hand := newThreeOfAKind(unsortedNormalFormHand, cards); hand != nil {
-    return hand, nil
-  }
-  if hand := newTwoPair(unsortedNormalFormHand, cards); hand != nil {
-    return hand, nil
-  }
-  if hand := newPair(unsortedNormalFormHand, cards); hand != nil {
-    return hand, nil
-  }
-  return newHighCard(unsortedNormalFormHand, cards), nil
+	slices.SortFunc(cards, func(a, b Card) int {
+		return cmp.Compare(a.rank, b.rank)
+	})
+	if hand := newStraight(unsortedNormalFormHand, cards); hand != nil {
+		return hand, nil
+	}
+	if hand := newThreeOfAKind(unsortedNormalFormHand, cards); hand != nil {
+		return hand, nil
+	}
+	if hand := newTwoPair(unsortedNormalFormHand, cards); hand != nil {
+		return hand, nil
+	}
+	if hand := newPair(unsortedNormalFormHand, cards); hand != nil {
+		return hand, nil
+	}
+	return newHighCard(unsortedNormalFormHand, cards), nil
 }
 
 func parseCards(hand string) ([]Card, error) {
@@ -160,7 +160,7 @@ func parseCards(hand string) ([]Card, error) {
 		}
 		cards = append(cards, card)
 	}
-  return cards, nil
+	return cards, nil
 }
 
 func normalFormHand(cards []Card) string {
@@ -303,21 +303,21 @@ func suitToRune(suit Suit) rune {
 		return '♧'
 	case DIAMONDS:
 		return '♢'
-  default:
+	default:
 		panic("invalid suit")
 	}
 }
 
 func getCountsByCard(hands []Hand) map[Card]int {
-  counts := make(map[Card]int)
-  for _, hand := range hands {
-    for _, card := range hand.Cards() {
-      if _, ok := counts[card]; ok {
-        counts[card]++
-      } else {
-        counts[card] = 1
-      }
-    }
-  }
-  return counts;
+	counts := make(map[Card]int)
+	for _, hand := range hands {
+		for _, card := range hand.Cards() {
+			if _, ok := counts[card]; ok {
+				counts[card]++
+			} else {
+				counts[card] = 1
+			}
+		}
+	}
+	return counts
 }

@@ -1,64 +1,64 @@
 package poker
 
 import (
-  "cmp"
-  "fmt"
+	"cmp"
+	"fmt"
 )
 
 type threeOfAKind struct {
-  str string
-  cards []Card
-  tripletRank CardRank
+	str         string
+	cards       []Card
+	tripletRank CardRank
 }
 
 func newThreeOfAKind(hand string, cards []Card) Hand {
-  counts := make(map[CardRank]int)
-  for _, card := range cards {
-    if _, ok := counts[card.rank]; ok {
-      counts[card.rank]++
-    } else {
-      counts[card.rank] = 1
-    }
-  }
+	counts := make(map[CardRank]int)
+	for _, card := range cards {
+		if _, ok := counts[card.rank]; ok {
+			counts[card.rank]++
+		} else {
+			counts[card.rank] = 1
+		}
+	}
 
-  var tripletRank CardRank
-  var found bool
+	var tripletRank CardRank
+	var found bool
 
-  for rank, count := range counts {
-    if count == 3 {
-      tripletRank = rank
-      found = true
-      break
-    }
-  }
+	for rank, count := range counts {
+		if count == 3 {
+			tripletRank = rank
+			found = true
+			break
+		}
+	}
 
-  if found {
-    return &threeOfAKind{hand, cards, tripletRank}
-  }
-  return nil
+	if found {
+		return &threeOfAKind{hand, cards, tripletRank}
+	}
+	return nil
 }
 
 func (t *threeOfAKind) Cards() []Card {
-  return t.cards
+	return t.cards
 }
 
 func (*threeOfAKind) Rank() HandRank {
-  return THREE_OF_A_KIND
+	return THREE_OF_A_KIND
 }
 
 func (t *threeOfAKind) String() string {
-  return t.str
+	return t.str
 }
 
 func (t *threeOfAKind) Compare(h Hand) int {
-  other, ok := h.(*threeOfAKind)
-  if !ok {
-    return cmp.Compare(t.Rank(), h.Rank())
-  }
+	other, ok := h.(*threeOfAKind)
+	if !ok {
+		return cmp.Compare(t.Rank(), h.Rank())
+	}
 
-  if len(other.cards) != len(t.cards) {
-    panic(fmt.Sprintf("invalid number of cards found in pair hand: %d vs %d", len(other.cards), len(t.cards)))
-  }
+	if len(other.cards) != len(t.cards) {
+		panic(fmt.Sprintf("invalid number of cards found in pair hand: %d vs %d", len(other.cards), len(t.cards)))
+	}
 
-  return cmp.Compare(t.tripletRank, other.tripletRank)
+	return cmp.Compare(t.tripletRank, other.tripletRank)
 }

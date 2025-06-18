@@ -1,8 +1,8 @@
 package poker
 
 import (
-  "testing"
-  "strings"
+	"strings"
+	"testing"
 )
 
 func TestValidCases(t *testing.T) {
@@ -12,9 +12,9 @@ func TestValidCases(t *testing.T) {
 			if err != nil {
 				t.Errorf("\nunexpected error: %s", err.Error())
 			} else {
-        if len(result) != len(tc.expected) {
-          t.Errorf("expected %d hands, got %d", len(tc.expected), len(result))
-        }
+				if len(result) != len(tc.expected) {
+					t.Errorf("expected %d hands, got %d", len(tc.expected), len(result))
+				}
 				for i, got := range result {
 					expected := tc.expected[i]
 					if expected != got {
