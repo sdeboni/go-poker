@@ -50,7 +50,7 @@ var validCases = []validCase{
 	},
 	{
 		description: "Higher pair of two pairs is retured",
-		input:       []string{"4♤ 3♤ 3♧ 2♡ 7♡", "A♢ 3♡ 2♧ 4♢ 5♧", "6♢ 4♡ 2♤ 4♧ 5♤"},
+		input:       []string{"4♤ 3♤ 3♧ 2♡ 7♡", "K♢ 3♡ 2♧ 4♢ 5♧", "6♢ 4♡ 2♤ 4♧ 5♤"},
 		expected:    []string{"6♢ 4♡ 2♤ 4♧ 5♤"},
 	},
 	{
@@ -87,6 +87,11 @@ var validCases = []validCase{
 		description: "Higher straight beats lower straight",
 		input:       []string{"2♡ 3♤ 4♢ 5♢ 6♧", "3♡ 4♤ 5♡ 6♢ 7♡"},
 		expected:    []string{"3♡ 4♤ 5♡ 6♢ 7♡"},
+	},
+	{
+		description: "Straight can start with Ace",
+		input:       []string{"A♧ 2♡ 3♤ 4♢ 5♢", "A♡ A♤ A♢ K♧ Q♡"},
+		expected:    []string{"A♧ 2♡ 3♤ 4♢ 5♢"},
 	},
 	{
 		description: "Two equal straights are both returned",

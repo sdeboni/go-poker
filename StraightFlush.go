@@ -3,28 +3,23 @@ package poker
 import "cmp"
 
 type straightFlush struct {
-	str   string
-	cards []Card
+	straight Hand
 }
 
 func newStraightFlush(hand string, cards []Card) Hand {
-	prevRank := cards[0].rank
-
-	for _, card := range cards[1:] {
-		if card.rank != prevRank+1 {
-			return nil
-		}
-		if card.suit != cards[0].suit {
-			return nil
-		}
-		prevRank = card.rank
+	if f := newFlush(hand, cards); f == nil {
+		return nil
 	}
 
-	return &straightFlush{hand, cards}
+	if s := newStraight(hand, cards); s == nil {
+		return nil
+	} else {
+		return &straightFlush{s}
+	}
 }
 
 func (s *straightFlush) Cards() []Card {
-	return s.cards
+	return s.straight.Cards()
 }
 
 func (*straightFlush) Rank() HandRank {
@@ -32,7 +27,7 @@ func (*straightFlush) Rank() HandRank {
 }
 
 func (s *straightFlush) String() string {
-	return s.str
+	return s.straight.String()
 }
 
 func (s *straightFlush) Compare(h Hand) int {
@@ -41,5 +36,5 @@ func (s *straightFlush) Compare(h Hand) int {
 		return cmp.Compare(s.Rank(), h.Rank())
 	}
 
-	return cmp.Compare(s.cards[0].rank, other.Cards()[0].rank)
+	return s.straight.Compare(other.straight)
 }
