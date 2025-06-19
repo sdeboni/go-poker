@@ -123,6 +123,21 @@ var validCases = []validCase{
 		input:       []string{"A♤ 3♧ 3♤ 3♡ 3♢", "2♤ 4♧ 4♤ 4♡ 4♢"},
 		expected:    []string{"2♤ 4♧ 4♤ 4♡ 4♢"},
 	},
+	{
+		description: "straight flush beatsf four of a kind",
+		input:       []string{"K♤ A♧ A♤ A♡ A♢", "2♤ 3♤ 4♤ 5♤ 6♤"},
+		expected:    []string{"2♤ 3♤ 4♤ 5♤ 6♤"},
+	},
+	{
+		description: "higher straight flush beats lower straight flush",
+		input:       []string{"2♤ 3♤ 4♤ 5♤ 6♤", "3♡ 4♡ 5♡ 6♡ 7♡"},
+		expected:    []string{"3♡ 4♡ 5♡ 6♡ 7♡"},
+	},
+	{
+		description: "equal straight flush hands are both returned",
+		input:       []string{"2♤ 3♤ 4♤ 5♤ 6♤", "K♤ A♧ A♤ A♡ A♢", "2♡ 3♡ 4♡ 5♡ 6♡"},
+		expected:    []string{"2♤ 3♤ 4♤ 5♤ 6♤", "2♡ 3♡ 4♡ 5♡ 6♡"},
+	},
 }
 
 var invalidCases = []invalidCase{
