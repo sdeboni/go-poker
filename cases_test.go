@@ -93,6 +93,16 @@ var validCases = []validCase{
 		input:       []string{"A♡ K♤ Q♢ J♢ 10♧", "10♡ J♤ Q♧ K♧ A♢"},
 		expected:    []string{"A♡ K♤ Q♢ J♢ 10♧", "10♡ J♤ Q♧ K♧ A♢"},
 	},
+	{
+		description: "flush beats straight",
+		input:       []string{"A♤ K♤ Q♢ J♢ 10♧", "2♡ 3♡ Q♡ K♡ A♡"},
+		expected:    []string{"2♡ 3♡ Q♡ K♡ A♡"},
+	},
+	{
+		description: "higher flush beats lower flush",
+		input:       []string{"2♤ 3♤ Q♤ K♤ A♤", "2♡ 4♡ Q♡ K♡ A♡"},
+		expected:    []string{"2♡ 4♡ Q♡ K♡ A♡"},
+	},
 }
 
 var invalidCases = []invalidCase{

@@ -42,7 +42,7 @@ const (
 	TWO_PAIR
 	THREE_OF_A_KIND
 	STRAIGHT
-	FLUSe
+	FLUSH
 	FULL_HOUSE
 	FOUR_OF_A_KIND
 	STRAIGHT_FLUSH
@@ -124,6 +124,10 @@ func parseHand(str string) (Hand, error) {
 	slices.SortFunc(cards, func(a, b Card) int {
 		return cmp.Compare(a.rank, b.rank)
 	})
+
+	if hand := newFlush(unsortedNormalFormHand, cards); hand != nil {
+		return hand, nil
+	}
 	if hand := newStraight(unsortedNormalFormHand, cards); hand != nil {
 		return hand, nil
 	}
