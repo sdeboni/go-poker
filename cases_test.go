@@ -113,6 +113,16 @@ var validCases = []validCase{
 		input:       []string{"A♤ A♡ 2♤ 2♡ 2♢", "3♢ 3♧ 4♤ 4♡ 4♢"},
 		expected:    []string{"3♢ 3♧ 4♤ 4♡ 4♢"},
 	},
+	{
+		description: "four of a kind beats full house",
+		input:       []string{"2♤ 3♧ 3♤ 3♡ 3♢", "K♤ K♡ A♤ A♡ A♢"},
+		expected:    []string{"2♤ 3♧ 3♤ 3♡ 3♢"},
+	},
+	{
+		description: "higher four of a kind beats lower four of a kind",
+		input:       []string{"A♤ 3♧ 3♤ 3♡ 3♢", "2♤ 4♧ 4♤ 4♡ 4♢"},
+		expected:    []string{"2♤ 4♧ 4♤ 4♡ 4♢"},
+	},
 }
 
 var invalidCases = []invalidCase{

@@ -22,20 +22,18 @@ func newThreeOfAKind(hand string, cards []Card) Hand {
 	}
 
 	var tripletRank CardRank
-	var found bool
 
 	for rank, count := range counts {
 		if count == 3 {
 			tripletRank = rank
-			found = true
 			break
 		}
 	}
 
-	if found {
-		return &threeOfAKind{hand, cards, tripletRank}
+	if tripletRank == 0 {
+		return nil
 	}
-	return nil
+	return &threeOfAKind{hand, cards, tripletRank}
 }
 
 func (t *threeOfAKind) Cards() []Card {
