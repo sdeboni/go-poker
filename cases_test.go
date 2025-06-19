@@ -103,6 +103,16 @@ var validCases = []validCase{
 		input:       []string{"2♤ 3♤ Q♤ K♤ A♤", "2♡ 4♡ Q♡ K♡ A♡"},
 		expected:    []string{"2♡ 4♡ Q♡ K♡ A♡"},
 	},
+	{
+		description: "full house beats flush",
+		input:       []string{"2♤ 2♡ 3♤ 3♡ 3♢", "6♡ 7♡ Q♡ K♡ A♡"},
+		expected:    []string{"2♤ 2♡ 3♤ 3♡ 3♢"},
+	},
+	{
+		description: "higher full house beats lower full house",
+		input:       []string{"A♤ A♡ 2♤ 2♡ 2♢", "3♢ 3♧ 4♤ 4♡ 4♢"},
+		expected:    []string{"3♢ 3♧ 4♤ 4♡ 4♢"},
+	},
 }
 
 var invalidCases = []invalidCase{

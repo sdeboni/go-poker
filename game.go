@@ -125,6 +125,9 @@ func parseHand(str string) (Hand, error) {
 		return cmp.Compare(a.rank, b.rank)
 	})
 
+	if hand := newFullHouse(unsortedNormalFormHand, cards); hand != nil {
+		return hand, nil
+	}
 	if hand := newFlush(unsortedNormalFormHand, cards); hand != nil {
 		return hand, nil
 	}
